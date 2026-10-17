@@ -87,7 +87,7 @@ src/
 
 - `shared/` **不得**依赖 `features/`（防反向依赖）。CI 必须有等价 ArchUnit 的检查。
 - `action-renderer` 是**唯一**消费原始 `TeachingAction` 的地方；其他组件不得直接消费。
-- `action-renderer` 内是**白名单静态映射表** `kind → Component`；未知 `kind` ⇒ 拒绝并上报 `ActionReject{reason:"UNSUPPORTED_TYPE"}`，**不得**用兜底组件静默渲染。
+- `action-renderer` 内是**白名单静态映射表** `kind → Component`；未知 `kind` ⇒ 拒绝并上报 `ActionReject{reason:"UNSUPPORTED_ACTION"}`，**不得**用兜底组件静默渲染。
 
 ---
 
@@ -96,7 +96,7 @@ src/
 ### 4.1 渲染安全（最高优先）
 
 1. **严禁执行模型生成的任意 JS**：禁止 `eval`、`new Function`、`dangerouslySetInnerHTML` 渲染模型产出、`javascript:` URL。
-2. **能力协商**：连接时上报 `renderer_capabilities: ["L0","L1","L2",...]`；服务端下发超出能力的动作 ⇒ `ActionReject{reason:"UNSUPPORTED_TYPE"}`，前端**不得**自行降级渲染冒充成功。
+2. **能力协商**：连接时上报 `renderer_capabilities: ["L0","L1","L2",...]`；服务端下发超出能力的动作 ⇒ `ActionReject{reason:"UNSUPPORTED_ACTION"}`，前端**不得**自行降级渲染冒充成功。
 3. **渲染分级 L0–L4**（`契约-前端课堂架构.md` §3）：能力不足时**降级并告知**，不伪造理解。L3（PPT 动画）不足时**局部暂停**。L0 文字 / `text_equivalent` 是必选兜底。
 
 ### 4.2 状态真实性
