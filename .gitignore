@@ -1,0 +1,90 @@
+# Aha frontend — 忽略规则
+# 原则：依赖 / 构建产物 / 本地环境 / 密钥 / 日志不入库。
+# 注意：.agents/ 是**本地技能资产**，不入库（内容不进公开仓，磁盘保留供开发使用）。
+
+# ---------- 依赖 ----------
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+.yarn/
+!.yarn/patches
+!.yarn/releases
+
+# pnpm-only 的机器强制：别的包管理器产生的锁文件一律不得入库。
+# 用「忽略」而不是「靠自觉」—— 一旦有人误用 npm/yarn，锁文件进不了 commit，
+# 会在 review 前就暴露，而不是悄悄污染仓库。
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
+bun.lockb
+bun.lock
+
+# ---------- 构建产物 ----------
+dist/
+dist-ssr/
+build/
+out/
+*.local
+.vite/
+.vite-cache/
+node_modules/.vite/
+*.tsbuildinfo
+
+# ---------- 测试与覆盖率产物 ----------
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+.stryker-tmp/
+reports/
+.mutation/
+
+# ---------- 本地运行时 ----------
+logs/
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pids/
+*.pid
+*.seed
+
+# ---------- 密钥与凭证（硬红线：永不入库）----------
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ---------- IDE / 工具 ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.iml
+
+# ---------- 操作系统 ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# ---------- 临时/草稿 ----------
+*.tmp
+*.bak
+*.orig
+*.rej
+*.swp
+*~
+.agents/
+
+# ---------- Python 字节码缓存（.agents/skills/ui-ux 的脚本产物）----------
+# .agents/ 已在上方整体忽略，本段为保险：即便将来放开 .agents/，
+# 字节码也不会被 ! 反忽略救回来。
+__pycache__/
+*.py[cod]

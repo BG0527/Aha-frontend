@@ -1,0 +1,26 @@
+# 统一换行：Windows 开发机 + Linux 部署机共存，禁止 CRLF 噪音进入 diff。
+* text=auto eol=lf
+
+# Windows 专用脚本必须保留 CRLF
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Unix 脚本保留 LF
+*.sh text eol=lf
+
+# 二进制：禁止换行转换与文本 diff
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.zip binary
+*.gz binary
+
+# 数据快照（CSV）——按文本处理，不在 diff 中折叠
+*.csv text eol=lf
